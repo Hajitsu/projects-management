@@ -1,0 +1,20 @@
+{
+  "name": "projects-management",
+  "version": "1.0.0",
+  "description": "Projects Management App",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hajitsu/projects-management.git"
+  },
+  "keywords": [],
+  "author": "hajitsu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hajitsu/projects-management/issues"
+  },
+  "homepage": "https://github.com/Hajitsu/projects-management#readme"
+}
