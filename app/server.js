@@ -1,5 +1,5 @@
 const path = require('path');
-
+const { AllRoutes } = require('./routers/router');
 module.exports = class Application {
 	#express = require('express');
 	#app = this.#express();
@@ -58,5 +58,7 @@ module.exports = class Application {
 				message: '.: welcome to hajitsu land :.',
 			});
 		});
+
+		this.#app.use(AllRoutes);
 	}
 };
