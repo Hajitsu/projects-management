@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = class Application {
-	#express = require('express')();
+	#express = require('express');
 	#app = this.#express();
 	constructor(PORT, DB_URL) {
 		this.configDatabase(DB_URL);
