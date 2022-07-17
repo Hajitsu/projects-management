@@ -6,8 +6,8 @@ module.exports = class Application {
 	constructor(PORT, DB_URL) {
 		this.configDatabase(DB_URL);
 		this.configureApplication();
-		this.createServer(PORT);
 		this.createRoutes();
+		this.createServer(PORT);
 		this.errorHandler();
 	}
 
@@ -59,6 +59,13 @@ module.exports = class Application {
 			});
 		});
 
+		// this.#app.use('*',());
+		// this.#app.use('*', (req, res, next) => {
+		// 	try {
 		this.#app.use(AllRoutes);
+		// 	} catch (err) {
+		// 		next(err);
+		// 	}
+		// });
 	}
 };

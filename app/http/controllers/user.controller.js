@@ -4,7 +4,7 @@ class UserController {
 	addSkills() {}
 	updateSkills() {}
 	acceptInviteInTeam() {}
-	rejectInviteInTeam() {}
+	rejectInviteInTeam() {} 
 }
 
 module.exports = { TeamController: new UserController() };
