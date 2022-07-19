@@ -19,15 +19,15 @@ function registerValidator() {
 			.isEmail()
 			.withMessage('please enter valid email.')
 			.custom(async (email) => {
-				const user = await UserModel.find({ email });
+				const user = await UserModel.findOne({ email });
 				if (user) throw 'duplicate email';
 				return true;
 			}),
 		body('mobile')
 			.isMobilePhone('fa-IR')
 			.withMessage('please enter valid mobile')
-			.custom(async (email) => {
-				const user = await UserModel.find({ mobile });
+			.custom(async (mobile) => {
+				const user = await UserModel.findOne({ mobile });
 				if (user) throw 'duplicate mobile';
 				return true;
 			}),

@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const { UserModel } = require('../../models/user.model');
-const { hashString, generateToken } = require('../../modules/utility');
+const { hashString, generateJWTToken } = require('../../modules/utility');
 
 class AuthController {
 	async register(req, res, next) {
@@ -30,7 +30,7 @@ class AuthController {
 			if (!bcrypt.compareSync(password, user.password))
 				throw { status: 401, success: false, message: 'user/password wrong' };
 
-			const token = generateToken({ username: username, email: user.email });
+			const token = generateJWTToken({ username: username });
 			user.token = token;
 			user.save();
 			return res.status(200).json({
