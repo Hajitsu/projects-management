@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		mobile: { type: String, required: true, unique: true },
 		email: { type: String, required: true, unique: true },
+		profile_image: { type: String, default: 'user.png' },
 		token: { type: String, unique: true },
 		roles: { type: [String], default: ['USER'] },
 		skills: { type: [String], default: [] },

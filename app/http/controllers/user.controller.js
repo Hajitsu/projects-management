@@ -4,6 +4,12 @@ class UserController {
 	async getProfile(req, res, nex) {
 		try {
 			const user = req.user;
+			user.profile_image =
+				req.protocol +
+				'://' +
+				req.get('host') +
+				'/' +
+				user.profile_image.replace(/[\\\\]/gm, '/');
 			return res.status(200).json({
 				status: 200,
 				success: true,
@@ -13,6 +19,7 @@ class UserController {
 			next(error);
 		}
 	}
+
 	async updateProfile(req, res, next) {
 		try {
 			let data = req.body;
@@ -23,8 +30,6 @@ class UserController {
 				if (!fields.includes(key)) delete data[key];
 				if (badValues.includes(value)) delete data[key];
 			});
-			
-			console.log(`🥷🏻✶ | file: user.controller.js | line 21 | UserController | Object.entries | data`, data);
 			const result = await UserModel.updateOne({ _id: userId }, { $set: data });
 			if (result.modifiedCount > 0)
 				return res.status(200).json({
@@ -37,9 +42,38 @@ class UserController {
 			next(error);
 		}
 	}
+
+	async uploadProfileImage(req, res, next) {
+		try {
+			const userId = req.user._id;
+			const filePath = req.file?.path.replace('\\', '/').substring(7);
+			const result = await UserModel.updateOne(
+				{ _id: userId },
+				{ $set: { profile_image: filePath } }
+			);
+			if (result.modifiedCount === 0)
+				throw {
+					status: 400,
+					success: false,
+					message: 'upload failed. try again..',
+				};
+
+			return res.status(200).json({
+				status: 200,
+				success: true,
+				message: 'image profile uploaded successfully.',
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
 	addSkills() {}
+
 	updateSkills() {}
+
 	acceptInviteInTeam() {}
+
 	rejectInviteInTeam() {}
 }
 
