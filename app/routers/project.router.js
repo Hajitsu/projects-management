@@ -18,4 +18,6 @@ router.post(
 	ProjectController.createProject
 );
 
+router.get('/list', checkLogin, ProjectController.getAllProjects);
+
 module.exports = { projectRoutes: router };
