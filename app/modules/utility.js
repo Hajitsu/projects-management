@@ -28,7 +28,6 @@ function createPathDirectory() {
 	return path.join('public', 'uploads', year, month, day);
 }
 
-createPathDirectory();
 module.exports = {
 	hashString,
 	generateJWTToken,

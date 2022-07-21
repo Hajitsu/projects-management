@@ -2,9 +2,13 @@ const { ProjectModel } = require('../../models/project.model');
 class ProjectController {
 	async createProject(req, res, next) {
 		try {
-			const { title, description } = req.body;
+			const { title, description, image, tags } = req.body;
+			console.log(
+				`🥷🏻✶ | file: project.controller.js | line 6 | ProjectController | createProject | tags`,
+				tags
+			);
 			const owner = req.user._id;
-			const result = await ProjectModel.create({ title, description, owner });
+			const result = await ProjectModel.create({ title, description, owner, image, tags });
 			if (!result)
 				throw { status: 400, success: false, message: 'پروژه ایجاد نشد. دوباره تلاش کنید.' };
 			return res.status(201).json({

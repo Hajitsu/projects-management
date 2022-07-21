@@ -5,6 +5,17 @@ const { ProjectController } = require('../http/controllers/project.controller');
 const { expressValidatorMapper } = require('../http/middlewares/check-errors.mw');
 const { createProjectValidation } = require('../http/validations/project.validation');
 
-router.post('/create', checkLogin, createProjectValidation(), expressValidatorMapper, ProjectController.createProject);
+const fileUpload = require('express-fileupload');
+const { expressFileUpload } = require('../modules/express-file-upload');
+
+router.post(
+	'/create',
+	fileUpload(),
+	checkLogin,
+	createProjectValidation(),
+	expressValidatorMapper,
+	expressFileUpload,
+	ProjectController.createProject
+);
 
 module.exports = { projectRoutes: router };
