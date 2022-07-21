@@ -15,7 +15,7 @@ class AuthController {
 			}).catch((error) => {
 				console.log(JSON.stringify(error, null, 4));
 				if (err?.code == 11000)
-					throw { status: 400, success: false, message: 'username exist' };
+					throw { status: 400, success: false, message: 'نام کاربری موجود است.' };
 			});
 			return res.json(result);
 		} catch (error) {
@@ -26,9 +26,9 @@ class AuthController {
 		try {
 			const { username, password } = req.body;
 			const user = await UserModel.findOne({ username });
-			if (!user) throw { status: 401, success: false, message: 'user/password wrong' };
+			if (!user) throw { status: 401, success: false, message: 'نام کاربری یا رمز عبور اشتباه است' };
 			if (!bcrypt.compareSync(password, user.password))
-				throw { status: 401, success: false, message: 'user/password wrong' };
+				throw { status: 401, success: false, message: 'نام کاربری یا رمز عبور اشتباه است' };
 
 			const token = generateJWTToken({ username: username });
 			user.token = token;
@@ -36,10 +36,9 @@ class AuthController {
 			return res.status(200).json({
 				status: 200,
 				success: true,
-				message: 'login successfully',
+				message: 'ورود با موفقیت انجام شد.',
 				token: token,
 			});
-			return res.json(req.body);
 		} catch (error) {
 			next(error);
 		}

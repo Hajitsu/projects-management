@@ -35,9 +35,9 @@ class UserController {
 				return res.status(200).json({
 					status: 200,
 					success: true,
-					message: 'update profile success.',
+					message: 'ویرایش پروفایل انجام شد.',
 				});
-			throw { status: 401, success: false, message: 'update user failed' };
+			throw { status: 401, success: false, message: 'ویرایش پروفایل انجام نشد. دوباره تلاش کنید.' };
 		} catch (error) {
 			next(error);
 		}
@@ -55,13 +55,13 @@ class UserController {
 				throw {
 					status: 400,
 					success: false,
-					message: 'upload failed. try again..',
+					message: 'آپلود فایل انجام نشد. دوباره تلاش کنید.',
 				};
 
 			return res.status(200).json({
 				status: 200,
 				success: true,
-				message: 'image profile uploaded successfully.',
+				message: 'آپلود فایل انجام شد.',
 			});
 		} catch (error) {
 			next(error);

@@ -14,7 +14,7 @@ function generateJWTToken(payload) {
 
 function verifyJWTToken(token) {
 	const result = jwt.verify(token, process.env.SECRET_KEY);
-	if (!result?.username) throw {status: 401, success: false, message: 'please login.'};
+	if (!result?.username) throw {status: 401, success: false, message: 'لطفا وارد شوید.'};
 	return result.username;
 }
 
