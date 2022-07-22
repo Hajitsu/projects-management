@@ -20,8 +20,11 @@ class ProjectController {
 			next(error);
 		}
 	}
+
 	async updateProject(req, res, next) {}
+
 	async removeProject(req, res, next) {}
+
 	async getAllProjects(req, res, next) {
 		try {
 			const owner = req.user._id;
@@ -35,8 +38,11 @@ class ProjectController {
 			next(error);
 		}
 	}
+
 	async getProjectById(req, res, next) {}
+
 	async getAllProjectsOfTeam(req, res, next) {}
+
 	async getProjectsOfUser(req, res, next) {}
 }
 
