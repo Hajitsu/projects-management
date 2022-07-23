@@ -13,33 +13,24 @@ router.post(
 	'/create',
 	fileUpload(),
 	checkLogin,
+	expressFileUpload,
 	createProjectValidation(),
 	expressValidatorMapper,
-	expressFileUpload,
 	ProjectController.createProject
 );
 
 router.get('/list', checkLogin, ProjectController.getAllProjects);
-router.get(
-	'/:id',
+router.get('/:id', checkLogin, mongoIdValidation(), expressValidatorMapper, ProjectController.getProjectById);
+router.get('/remove/:id', checkLogin, mongoIdValidation(), expressValidatorMapper, ProjectController.removeProject);
+router.put('/update/:id', checkLogin, mongoIdValidation(), expressValidatorMapper, ProjectController.updateProject);
+router.patch(
+	'/update-profile-image/:id',
+	fileUpload(),
 	checkLogin,
+	expressFileUpload,
 	mongoIdValidation(),
 	expressValidatorMapper,
-	ProjectController.getProjectById.bind(ProjectController)
-);
-router.get(
-	'/remove/:id',
-	checkLogin,
-	mongoIdValidation(),
-	expressValidatorMapper,
-	ProjectController.removeProject.bind(ProjectController)
-);
-router.put(
-	'/update/:id',
-	checkLogin,
-	mongoIdValidation(),
-	expressValidatorMapper,
-	ProjectController.updateProject.bind(ProjectController)
+	ProjectController.updateProjectProfileImage
 );
 
 module.exports = { projectRoutes: router };
