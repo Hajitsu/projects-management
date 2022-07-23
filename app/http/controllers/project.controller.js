@@ -1,6 +1,11 @@
+const autoBind = require('auto-bind');
 const { ProjectModel } = require('../../models/project.model');
+const { createFileLink } = require('../../modules/utility');
 
 class ProjectController {
+	constructor() {
+		autoBind(this);
+	}
 	async createProject(req, res, next) {
 		try {
 			const { title, description, image, tags } = req.body;
@@ -23,7 +28,6 @@ class ProjectController {
 			const owner = req.user._id;
 			const projectId = req.params.id;
 			await this._findProject(projectId, owner);
-			console.table(req.body);
 			const data = { ...req.body };
 			Object.entries(data).forEach(([key, value]) => {
 				if (!['title', 'text', 'tags'].includes(key)) delete data[key];
@@ -38,6 +42,25 @@ class ProjectController {
 			});
 
 			const updatedProject = await ProjectModel.updateOne({ _id: projectId }, { $set: data });
+			if (updatedProject.modifiedCount == 0)
+				throw { status: 400, success: false, message: 'پروژه آپدیت نشد.' };
+			return res.status(201).json({
+				status: 201,
+				success: true,
+				message: 'پروژه آپدیت شد.',
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	async updateProjectProfileImage(req, res, next) {
+		try {
+			const { image } = req.body;
+			const owner = req.user._id;
+			const projectId = req.params.id;
+			await this._findProject(projectId, owner);
+			const updatedProject = await ProjectModel.updateOne({ _id: projectId }, { $set: { image } });
 			if (updatedProject.modifiedCount == 0)
 				throw { status: 400, success: false, message: 'پروژه آپدیت نشد.' };
 			return res.status(201).json({
@@ -67,6 +90,9 @@ class ProjectController {
 		try {
 			const owner = req.user._id;
 			const projects = await ProjectModel.find({ owner }, { owner: 0, __v: 0 });
+			for (const project of projects) {
+				project.image = createFileLink(req, project.image);
+			}
 			return res.status(200).json({
 				status: 200,
 				success: true,
@@ -82,6 +108,7 @@ class ProjectController {
 			const owner = req.user._id;
 			const projectId = req.params.id;
 			const project = await this._findProject(projectId, owner);
+			project.image = createFileLink(req, project.image);
 			return res.status(200).json({
 				status: 200,
 				success: true,

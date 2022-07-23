@@ -9,12 +9,12 @@ function hashString(data) {
 }
 
 function generateJWTToken(payload) {
-	return jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: '10 days'});
+	return jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '10 days' });
 }
 
 function verifyJWTToken(token) {
 	const result = jwt.verify(token, process.env.SECRET_KEY);
-	if (!result?.username) throw {status: 401, success: false, message: 'لطفا وارد شوید.'};
+	if (!result?.username) throw { status: 401, success: false, message: 'لطفا وارد شوید.' };
 	return result.username;
 }
 
@@ -23,14 +23,19 @@ function createPathDirectory() {
 	const year = date.getFullYear().toString();
 	const month = date.getMonth().toString();
 	const day = date.getDay().toString();
-	
-	fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'uploads', year, month, day), {recursive: true});
+
+	fs.mkdirSync(path.join(__dirname, '..', '..', 'public', 'uploads', year, month, day), { recursive: true });
 	return path.join('public', 'uploads', year, month, day);
+}
+
+function createFileLink(req, filePath) {
+	return req.protocol + '://' + req.get('host') + '/' + filePath.replace(/[\\\\]/gm, '/');
 }
 
 module.exports = {
 	hashString,
 	generateJWTToken,
 	verifyJWTToken,
-	createPathDirectory
+	createPathDirectory,
+	createFileLink,
 };
