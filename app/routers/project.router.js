@@ -34,5 +34,12 @@ router.get(
 	expressValidatorMapper,
 	ProjectController.removeProject.bind(ProjectController)
 );
+router.put(
+	'/update/:id',
+	checkLogin,
+	mongoIdValidation(),
+	expressValidatorMapper,
+	ProjectController.updateProject.bind(ProjectController)
+);
 
 module.exports = { projectRoutes: router };
