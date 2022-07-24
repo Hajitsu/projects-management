@@ -14,7 +14,7 @@ class AuthController {
 				mobile,
 			}).catch((error) => {
 				console.log(JSON.stringify(error, null, 4));
-				if (err?.code == 11000)
+				if (error?.code == 11000)
 					throw { status: 400, success: false, message: 'نام کاربری موجود است.' };
 			});
 			return res.json(result);
