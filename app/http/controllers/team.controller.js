@@ -1,5 +1,6 @@
 const autoBind = require('auto-bind');
 const TeamModel = require('../../models/team.model');
+const { UserModel } = require('../../models/user.model');
 
 class TeamController {
 	constructor() {
@@ -67,6 +68,41 @@ class TeamController {
 
 	async inviteUserToTeam(req, res, next) {
 		try {
+			const userId = req.user._id;
+			const { teamId, invitedUserId } = req.params;
+			const team = await this._findUserInTeam(teamId, userId);
+			if (!team)
+				throw {
+					status: 400,
+					success: false,
+					message: 'شما عضو تیم نیستید و اجازه دعوت ندارید.',
+				};
+
+			const invitedUser = await UserModel.findOne({ invitedUserId });
+			if (!invitedUser) throw { status: 400, success: false, message: 'کاربر مورد نظر یافت نشد' };
+
+			const hadInvitedBefore = await this._findUserInTeam(teamId, invitedUserId);
+			if (hadInvitedBefore)
+				throw { status: 400, success: false, message: 'این کاربر قبلا به تیم اضافه شده است' };
+
+			const inviteRequest = {
+				inviter: req.user.username,
+				team_id: teamId,
+			};
+
+			const updateInviteResult = await UserModel.updateOne(
+				{ _id: invitedUserId },
+				{ $push: { invite_requests: inviteRequest } }
+			);
+
+			if (updateInviteResult.modifiedCount == 0)
+				throw { status: 500, success: false, message: 'دعوت ثبت نشد' };
+
+			return res.status(201).json({
+				status: 201,
+				success: true,
+				message: 'دعوت ثبت شد',
+			});
 		} catch (error) {
 			next(error);
 		}
@@ -95,6 +131,14 @@ class TeamController {
 		} catch (error) {
 			next(error);
 		}
+	}
+
+	async _findUserInTeam(teamId, userId) {
+		const result = await TeamModel.findOne({
+			_id: teamId,
+			$or: [{ owner: userId }, { users: userId }],
+		});
+		return !!result;
 	}
 }
 
