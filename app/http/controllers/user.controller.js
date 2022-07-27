@@ -110,6 +110,35 @@ class UserController {
 		}
 	}
 
+	async changeInviteRequestStatus(req, res, next) {
+		try {
+			const { id, status } = req.params;
+			const request = await UserModel.findOne({ 'invite_requests._id': id });
+			if (!request)
+				throw { status: 400, success: false, message: 'درخواستی با این مشخصات یافت نشد.' };
+			const foundRequest = request.invite_requests.find((item) => item.id == id);
+			if (foundRequest.status !== 'pending')
+				throw { status: 400, success: false, message: 'این درخواست قبلا رد یا تایید شده است' };
+			if (!['accepted', 'rejected'].includes(status))
+				throw { status: 400, success: false, message: 'وضعیت صحیح نمی‌باشد' };
+			const updateResult = await UserModel.updateOne(
+				{ 'invite_requests._id': foundRequest._id },
+				{
+					$set: { 'invite_requests.$.status': status },
+				}
+			);
+			if (updateResult.modifiedCount == 0)
+				throw { status: 500, success: false, message: 'تغییر وضعیت انجام نشد' };
+			res.status(201).json({
+				status: 201,
+				success: true,
+				message: 'تغییر وضعیت انجام شد',
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+
 	addSkills() {}
 
 	updateSkills() {}
