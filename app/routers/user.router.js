@@ -10,6 +10,7 @@ const router = require("express").Router();
 
 router.get("/profile", checkLogin, UserController.getProfile);
 router.get("/invite-requests", checkLogin, UserController.getAllUserRequests);
+router.get("/invite-requests/:status", checkLogin, UserController.getUserInvitionsByStatus );
 router.post("/profile", checkLogin, UserController.updateProfile);
 router.post(
   "/profile-image",
