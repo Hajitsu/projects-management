@@ -128,6 +128,29 @@ class TeamController {
 
 	async updateTeam(req, res, next) {
 		try {
+			const data = { ...req.body };
+			Object.keys(data).forEach((key) => {
+				if (!data[key]) delete data[key];
+				if (['', ' ', NaN, undefined, null].includes(data[key])) delete data[key];
+			});
+			const owner = req.user._id;
+			const { id } = req.params;
+			const team = await TeamModel.findOne({ _id: id, owner: owner });
+			if (!team) throw { status: 400, success: false, message: 'تیم یافت نشد.' };
+			const updateResult = await TeamModel.updateOne(
+				{ _id: id },
+				{
+					$set: data,
+				}
+			);
+			if (updateResult.modifiedCount == 0)
+				throw { status: 500, success: false, message: 'تیم بروزرسانی نشد.' };
+
+			return res.status(201).json({
+				status: 201,
+				success: true,
+				message: 'تیم بروزرسانی شد.',
+			});
 		} catch (error) {
 			next(error);
 		}
