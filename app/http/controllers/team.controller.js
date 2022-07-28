@@ -54,7 +54,38 @@ class TeamController {
 	async getUserTeams(req, res, next) {
 		try {
 			const userId = req.user._id;
-			const teams = await TeamModel.find({ $or: [{ owner: userId }, { users: userId }] }, { __v: 0 });
+			// const teams = await TeamModel.find({ $or: [{ owner: userId }, { users: userId }] }, { __v: 0 });
+			const teams = await TeamModel.aggregate([
+				{
+					$match: { $or: [{ owner: userId }, { users: userId }] },
+				},
+				{
+					$lookup: {
+						from: 'users',
+						localField: 'owner',
+						foreignField: '_id',
+						as: 'owner',
+					},
+				},
+				{
+					// $project: {
+					// 	'owner.roles': 0,
+					// 	'owner.password': 0,
+					// 	'owner.skills': 0,
+					// 	'owner.__v': 0,
+					// 	'owner.teams': 0,
+					// 	'owner.invite_requests': 0,
+					// },
+					$project: {
+						'owner.username': 1,
+						'owner.first_name': 1,
+						'owner.last_name': 1,
+					},
+				},
+				{
+					$unwind: '$owner',
+				},
+			]);
 			if (!teams) throw { status: 400, success: false, message: 'تیم یافت نشد.' };
 			return res.status(200).json({
 				status: 200,
