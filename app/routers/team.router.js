@@ -17,6 +17,7 @@ router.get(
 	TeamController.inviteUserToTeam
 );
 router.get('/:id', checkLogin, mongoIdValidation(), expressValidatorMapper, TeamController.getTeamById);
+router.put('/update/:id', checkLogin, mongoIdValidation(), expressValidatorMapper, TeamController.updateTeam);
 router.delete('/delete/:id', checkLogin, mongoIdValidation(), expressValidatorMapper, TeamController.removeTeam);
 
 module.exports = { teamRoutes: router };

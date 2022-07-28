@@ -1,0 +1,836 @@
+{
+	"info": {
+		"_postman_id": "b515e667-7edf-4de2-add6-2be742848e88",
+		"name": "projects managements",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2654053"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"user 3\",\n    \"password\":\"1111111\",\n    \"confirmPassword\":\"1111111\",\n    \"email\":\"user3@gmail.com\",\n    \"mobile\":\"09123333333\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/register",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"user 1\",\n    \"password\":\"1111111\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login user 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"user 2\",\n    \"password\":\"1111111\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/auth/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token_user_2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\" : \"Hamid\",\n    \"last_name\" : \"Mohammadi\",\n    \"skills\" : [\"skill 1\", \"skill 2\", \"skill 3\", \"skill 4\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user/profile",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create project",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "project 3",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur dolores molestiae. Impedit qui, repudiandae ut assumenda nostrum illum iusto aperiam eos expedita eius doloribus dolorum in quisquam aliquam eaque!",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "hamid.mohamm.jpg"
+						},
+						{
+							"key": "tags",
+							"value": "tag 7",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "tag 8",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "tag 9",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/project/create",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"project",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user projects",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "project 1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur dolores molestiae. Impedit qui, repudiandae ut assumenda nostrum illum iusto aperiam eos expedita eius doloribus dolorum in quisquam aliquam eaque!",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/hajitsu/Downloads/hamid.mohamm.jpg",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/project/list",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"project",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get project by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/project/62d99968c84099e5a6fbae20",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"project",
+						"62d99968c84099e5a6fbae20"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update project by id",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\":\"project 11111\",\n    \"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur dolores molestiae. Impedit qui, repudiandae ut assumenda nostrum illum iusto aperiam eos expedita eius doloribus dolorum in quisquam aliquam eaque!\",\n    \"tags\":[\"\",\"\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/project/update/62d99968c84099e5a6fbae20",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"project",
+						"update",
+						"62d99968c84099e5a6fbae20"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update project image profile by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "2022-07-20 15.41.21.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/project/update-profile-image/62d99968c84099e5a6fbae20",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"project",
+						"update-profile-image",
+						"62d99968c84099e5a6fbae20"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove project by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "project 1",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur dolores molestiae. Impedit qui, repudiandae ut assumenda nostrum illum iusto aperiam eos expedita eius doloribus dolorum in quisquam aliquam eaque!",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/Users/hajitsu/Downloads/hamid.mohamm.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/project/remove/62d9de97cac0bb87d77446f2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"project",
+						"remove",
+						"62d9de97cac0bb87d77446f2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create team",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"unique_title\":\"team_4\",\n    \"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur dolores molestiae. Impedit qui, repudiandae ut assumenda nostrum illum iusto aperiam eos expedita eius doloribus dolorum in quisquam aliquam eaque!\",\n    \"name\":\"team 4\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/team/create",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"team",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all teams",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/team/list",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"team",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get team by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/team/62dd0bc4246e5f1715c61235",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"team",
+						"62dd0bc4246e5f1715c61235"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user teams",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/team/user-teams",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"team",
+						"user-teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "remove team",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/team/delete/62dd0bdf246e5f1715c6123f",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"team",
+						"delete",
+						"62dd0bdf246e5f1715c6123f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invite user to team",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{url}}/team/invite/62dd0b9d246e5f1715c61231/62dd26eecfc639e499546e39",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"team",
+						"invite",
+						"62dd0b9d246e5f1715c61231",
+						"62dd26eecfc639e499546e39"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list invite request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/invite-requests",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"invite-requests"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get pending invite request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token_user_2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/invite-requests/pending",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"invite-requests",
+						"pending"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change invite request status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token_user_2}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/user/change-invite-request-status/62dfb2f610e98dfaf8441c0c/accepted",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user",
+						"change-invite-request-status",
+						"62dfb2f610e98dfaf8441c0c",
+						"accepted"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update team",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"team 1\",\n    \"description\":\"Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis consectetur dolores molestiae. Impedit qui, repudiandae ut assumenda nostrum illum iusto aperiam eos expedita eius doloribus dolorum in quisquam aliquam eaque!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/team/update/62dd0b9d246e5f1715c61231",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"team",
+						"update",
+						"62dd0b9d246e5f1715c61231"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
